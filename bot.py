@@ -202,7 +202,15 @@ def send_to_telegram(message):
     requests.post(url, data={"chat_id": chat_id, "text": message, "parse_mode": "Markdown"})
 
 if __name__ == "__main__":
-    # Получаем расписание на сегодня (day_offset=0)
-    schedule_text = get_schedule_for_day(GROUP_NAME, day_offset=0)
+    import sys
+    # Если передан аргумент "tomorrow" — присылаем расписание на завтра
+    if len(sys.argv) > 1 and sys.argv[1].lower() == "tomorrow":
+        day_offset = 1
+        label = "завтра"
+    else:
+        day_offset = 0
+        label = "сегодня"
+
+    schedule_text = get_schedule_for_day(GROUP_NAME, day_offset=day_offset)
     send_to_telegram(schedule_text)
-    print("✅ Сообщение отправлено.")
+    print(f"✅ Сообщение с расписанием на {label} отправлено.")
