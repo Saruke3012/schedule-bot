@@ -201,7 +201,7 @@ def send_to_telegram(message):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     requests.post(url, data={"chat_id": chat_id, "text": message, "parse_mode": "Markdown"})
 
-if name == "main":
+if __name__ == "__main__":
     # Получаем расписание на сегодня (day_offset=0)
     schedule_text = get_schedule_for_day(GROUP_NAME, day_offset=0)
     send_to_telegram(schedule_text)
