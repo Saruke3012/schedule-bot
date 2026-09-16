@@ -15,8 +15,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
+
       - name: Отправить расписание на сегодня (утром)
-        if: github.event.schedule == '0 5 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '0 5 * * *' || github.event_name != 'schedule'
         run: python bot.py
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
